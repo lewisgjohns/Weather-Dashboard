@@ -17,7 +17,7 @@ searchBtn.addEventListener('click', () => {
         addToHistory(city);
     }
 });
-
+// get weather function
 function getWeatherData(city) {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`)
         .then(response => response.json())
