@@ -6,7 +6,7 @@ body {
 }
 
 header{
-    background-color: #333;
+    background-color:rgb(55, 55, 93);
     color: white;
     padding: 10px 0;
     text-align: center;
@@ -37,9 +37,9 @@ header{
 }
 
 #search-btn {
-    width: 100%;
+    width: 112%;
     padding: 10px;
-    background-color: #4CAF50;
+    background-color: rgb(49, 49, 126);
     color: white;
     border: none;
     cursor: pointer;
@@ -47,6 +47,8 @@ header{
 
 #search-history {
     margin-top: 20px;
+    width: 112%;
+    
 }
 
 #search-history button {
@@ -54,6 +56,8 @@ header{
     padding: 10px;
     margin-bottom: 5px;
     cursor: pointer;
+    background-color: rgb(97, 96, 96);
+    color: white;
 }
 
 .weather-info {
@@ -71,15 +75,18 @@ header{
 #forecast-cards {
     display: flex;
     justify-content: space-between;
+    
 }
 
 .forecast-card {
     width: 18%;
-    background-color: #f9f9f9;
+    color: white;
+    background-color: rgb(49, 49, 126);
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
     text-align: center;
+    margin-right: 10px;
 }
 
 .weather-icon {
