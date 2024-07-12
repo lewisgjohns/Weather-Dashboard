@@ -9,6 +9,7 @@ const temperature = document.getElementById('temperature');
 const windSpeed = document.getElementById('wind-speed');
 const humidity = document.getElementById('humidity');
 const forecastCards = document.getElementById('forecast-cards');
+const cityList = document.getElementById('city-list');
 
 searchBtn.addEventListener('click', () => {
     const city = cityInput.value;
@@ -17,14 +18,34 @@ searchBtn.addEventListener('click', () => {
         addToHistory(city);
     }
 });
-// get weather function
+
+cityInput.addEventListener('input', () => {
+    const query = cityInput.value;
+    if (query.length > 2) { // Fetch suggestions when the input length is greater than 2
+        fetchCitySuggestions(query);
+    }
+});
+
+function fetchCitySuggestions(query) {
+    fetch(`https://api.openweathermap.org/data/2.5/find?q=${query}&type=like&sort=population&cnt=5&appid=${apiKey}`)
+        .then(response => response.json())
+        .then(data => {
+            cityList.innerHTML = '';
+            data.list.forEach(city => {
+                const option = document.createElement('option');
+                option.value = `${city.name}, ${city.sys.country}`;
+                cityList.appendChild(option);
+            });
+        });
+}
+
 function getWeatherData(city) {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`)
         .then(response => response.json())
         .then(data => {
             const { name, main, wind, weather } = data;
             cityName.textContent = `${name} (${new Date().toLocaleDateString()})`;
-            weatherIcon.textContent = weather[0].description;
+            weatherIcon.innerHTML = `<img src="https://openweathermap.org/img/wn/${weather[0].icon}@2x.png" alt="${weather[0].description}" class="weather-icon"> ${weather[0].description}`;
             temperature.textContent = `Temp: ${main.temp}°F`;
             windSpeed.textContent = `Wind: ${wind.speed} MPH`;
             humidity.textContent = `Humidity: ${main.humidity}%`;
@@ -41,6 +62,7 @@ function getWeatherData(city) {
                 forecastCard.classList.add('forecast-card');
                 forecastCard.innerHTML = `
                     <p>${forecastDate}</p>
+                    <img src="https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png" alt="${forecast.weather[0].description}" class="weather-icon">
                     <p>${forecast.weather[0].description}</p>
                     <p>Temp: ${forecast.main.temp}°F</p>
                     <p>Wind: ${forecast.wind.speed} MPH</p>

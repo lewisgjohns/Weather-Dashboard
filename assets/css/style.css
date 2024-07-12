@@ -25,9 +25,9 @@ header{
 }
 
 .search-section h2 {
-    margin-bottom: 10px; /* Margin below the subheading */
-    font-size: 20px; /* Font size for the subheading */
-    color: #333; /* Color for the subheading */
+    margin-bottom: 10px; 
+    font-size: 20px;
+    color: #333; 
 }
 
 #city-input {
@@ -80,4 +80,9 @@ header{
     border-radius: 8px;
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
     text-align: center;
+}
+
+.weather-icon {
+    width: 50px;
+    height: 50px;
 }
