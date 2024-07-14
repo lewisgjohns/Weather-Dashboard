@@ -11,11 +11,19 @@ const humidity = document.getElementById('humidity');
 const forecastCards = document.getElementById('forecast-cards');
 const cityList = document.getElementById('city-list');
 
+// Load search history from local storage
+window.onload = () => {
+    const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+    history.forEach(city => {
+        addToHistory(city, false);
+    });
+};
+
 searchBtn.addEventListener('click', () => {
     const city = cityInput.value;
     if (city) {
         getWeatherData(city);
-        addToHistory(city);
+        addToHistory(city, true);
     }
 });
 
@@ -73,11 +81,19 @@ function getWeatherData(city) {
         });
 }
 
-function addToHistory(city) {
+function addToHistory(city, saveToLocalStorage = true) {
     const historyItem = document.createElement('button');
     historyItem.textContent = city;
     historyItem.addEventListener('click', () => {
         getWeatherData(city);
     });
     searchHistory.appendChild(historyItem);
+
+    if (saveToLocalStorage) {
+        let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+        if (!history.includes(city)) {
+            history.push(city);
+            localStorage.setItem('searchHistory', JSON.stringify(history));
+        }
+    }
 }
