@@ -11,7 +11,7 @@ const humidity = document.getElementById('humidity');
 const forecastCards = document.getElementById('forecast-cards');
 const cityList = document.getElementById('city-list');
 
-// Load search history from local storage
+// Loads search history from local storage
 window.onload = () => {
     const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
     history.forEach(city => {
@@ -19,6 +19,7 @@ window.onload = () => {
     });
 };
 
+//this function will be called when the user clicks on the search button
 searchBtn.addEventListener('click', () => {
     const city = cityInput.value;
     if (city) {
@@ -27,13 +28,15 @@ searchBtn.addEventListener('click', () => {
     }
 });
 
+// this will be called when the user types in the city input
 cityInput.addEventListener('input', () => {
     const query = cityInput.value;
-    if (query.length > 2) { // Fetch suggestions when the input length is greater than 2
+    if (query.length > 2) { // Fetches suggestions when the input length is greater than 2
         fetchCitySuggestions(query);
     }
 });
 
+// Fetches city suggestions from the OpenWeather API
 function fetchCitySuggestions(query) {
     fetch(`https://api.openweathermap.org/data/2.5/find?q=${query}&type=like&sort=population&cnt=5&appid=${apiKey}`)
         .then(response => response.json())
@@ -47,6 +50,7 @@ function fetchCitySuggestions(query) {
         });
 }
 
+// Fetches weather data from the OpenWeather API
 function getWeatherData(city) {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`)
         .then(response => response.json())
@@ -81,6 +85,7 @@ function getWeatherData(city) {
         });
 }
 
+//this function adds the city to the search history
 function addToHistory(city, saveToLocalStorage = true) {
     const historyItem = document.createElement('button');
     historyItem.textContent = city;
